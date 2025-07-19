@@ -30,4 +30,6 @@
     
   })(window.jQuery);
 
-
+    document.getElementById('whatsapp-icon').addEventListener('click', function() {
+        window.open('https://wa.me/237693427197', '_blank');
+    });

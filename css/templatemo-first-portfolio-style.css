@@ -482,7 +482,8 @@ strong {
 
     .produit-slider-track > div {
         flex: 0 0 auto;
-        width: 250px;
+        width: 400px;
+        height: 400px;
     }
 
     .projects-thumb {
@@ -1209,10 +1210,6 @@ strong {
     margin-left: 12px;
   }
 
-  .distribution-image{
-    margin-bottom:10px;
-  }
-
   .hero h2{
     background: transparent;
     color: whitesmoke;
@@ -1223,6 +1220,17 @@ strong {
   /* .custom-btn, .navbar .custom-btn{
     display: none;
   } */
+}
+
+@media screen and (max-width: 767px) {
+    .about-image{
+      display: none;
+    }
+
+    .distribution-image{
+      margin-bottom:10px;
+    }
+    
 }
 
 @media screen and (max-width: 480px) {
