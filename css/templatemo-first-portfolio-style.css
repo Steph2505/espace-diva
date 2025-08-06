@@ -1072,6 +1072,13 @@ strong {
   color: var(--white-color);
 }
 
+.distribution-image{
+  border-radius: 5%;
+}
+
+.services-thumb div h3{
+  color:brown;
+}
 
 /*---------------------------------------
   RESPONSIVE STYLES               
@@ -1282,6 +1289,8 @@ strong {
     }
     
 }
+
+
 
 @media screen and (max-width: 480px) {
   h1 {

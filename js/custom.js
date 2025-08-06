@@ -40,6 +40,10 @@
       window.open('https://wa.me/237693427197', '_blank');
   });
 
+  el.addEventListener('touchend', function () {
+      window.open('https://wa.me/237693427197', '_blank');
+  });
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const sliderTrack = document.getElementById('slider-track');
@@ -82,7 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function scrollNext() {
-        [sliderTrack, sliderTrack1].forEach(track => {
+        sliderTrack.forEach(track => {
+            track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        });
+        sliderTrack1.forEach(track => {
             track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         });
         restartAutoScrollWithDelay();
@@ -95,7 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
         restartAutoScrollWithDelay();
     }
 
-    [btnNext, btnNext1].forEach(btn => btn.addEventListener('click', scrollNext));
+    [btnNext].forEach(btn => btn.addEventListener('click', scrollNext));
+    [btnNext1].forEach(btn => btn.addEventListener('click', scrollNext));
     [btnPrev, btnPrev1].forEach(btn => btn.addEventListener('click', scrollPrev));
 
     [sliderTrack, sliderTrack1].forEach(track => {
