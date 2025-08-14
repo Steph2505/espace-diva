@@ -29,43 +29,34 @@
 });
     
   })(window.jQuery);
-
-  const el = document.getElementById('whatsapp-icon');
-
-  el.addEventListener('click', function () {
-      window.open('https://wa.me/237693427197', '_blank');
-  });
-
-  el.addEventListener('touchstart', function () {
-      window.open('https://wa.me/237693427197', '_blank');
-  });
-
-  el.addEventListener('touchend', function () {
-      window.open('https://wa.me/237693427197', '_blank');
-  });
+$('.bi-whatsapp').on('click touchstart', function(e) {
+  e.preventDefault(); // Empêche un double déclenchement
+  window.open('https://wa.me/237693427197', '_blank');
+});
 
 
-document.addEventListener('DOMContentLoaded', () => {
-    const sliderTrack = document.getElementById('slider-track');
-    const btnPrev = document.getElementById('btn-prev');
-    const btnNext = document.getElementById('btn-next');
+$(document).ready(function () {
+    const $sliderTrack = $('#slider-track');
+    const $btnPrev = $('#btn-prev');
+    const $btnNext = $('#btn-next');
 
-    const sliderTrack1 = document.getElementById('slider-track1');
-    const btnPrev1 = document.getElementById('btn-prev1');
-    const btnNext1 = document.getElementById('btn-next1');
+    const $sliderTrack1 = $('#slider-track1');
+    const $btnPrev1 = $('#btn-prev1');
+    const $btnNext1 = $('#btn-next1');
 
     const scrollAmount = 420;
     let autoScrollInterval;
     let autoScrollDelayTimeout;
     let isAutoScrolling = true;
+    let touchStartX = 0;
 
     function startAutoScroll() {
         autoScrollInterval = setInterval(() => {
-            [sliderTrack, sliderTrack1].forEach(track => {
-                if (track.scrollLeft + track.offsetWidth >= track.scrollWidth - 1) {
-                    track.scrollTo({ left: 0, behavior: 'smooth' });
+            [$sliderTrack, $sliderTrack1].forEach($track => {
+                if ($track.scrollLeft() + $track.outerWidth() >= $track[0].scrollWidth - 1) {
+                    $track.animate({ scrollLeft: 0 }, 500);
                 } else {
-                    track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                    $track.animate({ scrollLeft: $track.scrollLeft() + scrollAmount }, 500);
                 }
             });
         }, 2000);
@@ -80,40 +71,36 @@ document.addEventListener('DOMContentLoaded', () => {
     function restartAutoScrollWithDelay(delay = 10000) {
         stopAutoScroll();
         clearTimeout(autoScrollDelayTimeout);
-        autoScrollDelayTimeout = setTimeout(() => {
-            startAutoScroll();
-        }, delay);
+        autoScrollDelayTimeout = setTimeout(startAutoScroll, delay);
     }
 
     function scrollNext() {
-        sliderTrack.forEach(track => {
-            track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        });
-        sliderTrack1.forEach(track => {
-            track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        [$sliderTrack, $sliderTrack1].forEach($track => {
+            $track.animate({ scrollLeft: $track.scrollLeft() + scrollAmount }, 500);
         });
         restartAutoScrollWithDelay();
     }
 
     function scrollPrev() {
-        [sliderTrack, sliderTrack1].forEach(track => {
-            track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        [$sliderTrack, $sliderTrack1].forEach($track => {
+            $track.animate({ scrollLeft: $track.scrollLeft() - scrollAmount }, 500);
         });
         restartAutoScrollWithDelay();
     }
 
-    [btnNext].forEach(btn => btn.addEventListener('click', scrollNext));
-    [btnNext1].forEach(btn => btn.addEventListener('click', scrollNext));
-    [btnPrev, btnPrev1].forEach(btn => btn.addEventListener('click', scrollPrev));
+    $btnNext.on('click', scrollNext);
+    $btnNext1.on('click', scrollNext);
+    $btnPrev.on('click', scrollPrev);
+    $btnPrev1.on('click', scrollPrev);
 
-    [sliderTrack, sliderTrack1].forEach(track => {
-        track.addEventListener('touchstart', e => {
-            touchStartX = e.touches[0].clientX;
+    [$sliderTrack, $sliderTrack1].forEach($track => {
+        $track.on('touchstart', function (e) {
+            touchStartX = e.originalEvent.touches[0].clientX;
             stopAutoScroll();
         });
 
-        track.addEventListener('touchend', e => {
-            const touchEndX = e.changedTouches[0].clientX;
+        $track.on('touchend', function (e) {
+            const touchEndX = e.originalEvent.changedTouches[0].clientX;
             const deltaX = touchEndX - touchStartX;
 
             if (Math.abs(deltaX) > 50) {
@@ -125,10 +112,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    let touchStartX = 0;
-
     startAutoScroll();
 });
+
 
 
 
